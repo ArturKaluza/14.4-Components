@@ -30,12 +30,18 @@ const movies = [
 const Movie = React.createClass({
   propType: {
     key: React.PropTypes.object.isRequierd,
+    movie: React.PropTypes.object.isRequierd
   }, 
   render: function() {
-    return React.createElement('li', {key: this.props.id}
+    return ( 
+      React.createElement('li', {key: this.props.id}, 
+        React.createElement(MovieTitle, {movie: this.props.movie}),
+        React.createElement(MovieDesc, {movie: this.props.movie}),
+        React.createElement(MovieImg, {movie: this.props.movie})
+      )
     )
   } 
-})
+});
 
 const MovieTitle = React.createClass({
   propType: {
@@ -44,7 +50,7 @@ const MovieTitle = React.createClass({
   render: function() {
     return React.createElement('h2', {}, this.props.movie.title)
   }
-})
+});
 
 const MovieDesc = React.createClass({
   propType: {
@@ -53,7 +59,7 @@ const MovieDesc = React.createClass({
   render: function() {
     return React.createElement('p', {}, this.props.movie.desc)
   }
-})
+});
 
 const MovieImg = React.createClass({
   propType: {
@@ -62,22 +68,17 @@ const MovieImg = React.createClass({
   render: function() {
     return React.createElement('img', {src: this.props.movie.src})
   }
-})
+});
 
 
-const moviesElement = movies.map((movie) => {
-  return (React.createElement(Movie, {key: movie.id},       
-    console.log(React.createElement(MovieTitle, {movie: movie})),
-    React.createElement(MovieDesc, {movie: movie}),
-    React.createElement(MovieImg, {src: movie}) 
-    )
-  ) 
+const moviesElement = movies.map(movie => {
+  return React.createElement(Movie, {key: movie.id, movie: movie})
 });
 
 const element = React.createElement('div', {}, 
   React.createElement('h1', {}, 'Lista filmów'),
   React.createElement('ul', {}, moviesElement)
-)
+);
 
 ReactDOM.render(element, document.getElementById('app'));
 
